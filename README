@@ -2,35 +2,40 @@ AWOL: ArchWiki Offline (Alpha I)
 
 Description:
 
-	ArchWki Offline provides users an offline version of the popular Linux resource, ArchWiki (http://wiki.archlinux.org).
-	It is based on OpenZIM (http://www.openzim.org) and uses zimreader-java (http://svn.openzim.org/viewvc.cgi/trunk/zimreader-java/).
-	
-	This software is alpha software (http://en.wikipedia.org/wiki/Software_release_life_cycle#Alpha) and meant for testing purposes
-	as we push towards a "feature complete" beta (see: BETA_TODO). 
+ArchWki Offline provides users an offline version of the popular Linux resource,
+ArchWiki (http://wiki.archlinux.org). It is based on OpenZIM (http://www.openzim.org)
+and uses zimreader-java (http://svn.openzim.org/viewvc.cgi/trunk/zimreader-java/).
+
+This software is alpha software (http://en.wikipedia.org/wiki/Software_release_life_cycle#Alpha) and meant for testing purposes
+as we push towards a "feature complete" beta (see: BETA_TODO). 
 
 Version: 0.1.0 - Alpha I
 
+
+*****
 License:
-    Copyright (C) 2012  Tetractys Productions LLC.
 
-    This program is free software: you can redistribute it and/or modify
-    it under the terms of the GNU General Public License as published by
-    the Free Software Foundation, either version 3 of the License, or
-    (at your option) any later version.
+Copyright (C) 2012  Tetractys Productions LLC.
 
-    This program is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU General Public License for more details.
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
 
-    You should have received a copy of the GNU General Public License
-    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.
+*****
+
 
 Homepage: www.tetractysproductions.com
 Android Market: FIXME!
 
 Author: Exiquio Cooper-Anderson (exiquio [at] gmail [dot] com)
-
 
 The ArchWiki name, Arch Linux name and the Arch Linux Logo are recognized trademarks of Judd Vinet and Aaron Griffin.
 
