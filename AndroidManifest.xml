@@ -2,8 +2,8 @@
 <!-- MAJOR.MINOR.REVISION - Odd minor versions are development only! -->
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.tetractysproductions.AWOL"
-    android:versionCode="1"
-    android:versionName="0.1.0 - Alpha" 
+    android:versionCode="2"
+    android:versionName="0.1.1 - Alpha" 
     android:installLocation="preferExternal"> 
 
     <uses-sdk android:targetSdkVersion="15" />
