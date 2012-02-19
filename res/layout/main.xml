@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical">
+    
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:layout_gravity="center"
+        android:layout_marginTop="10sp"
+        android:src="@drawable/ic_launcher"
+        android:contentDescription="@string/app_logo_description" />
+ 
+    <Spinner 
+        android:id="@+id/topic_spinner"
+        android:layout_height="wrap_content"
+        android:layout_width="fill_parent"
+        android:layout_weight="0"
+        android:layout_marginLeft="10sp"
+        android:layout_marginRight="10sp"
+        android:layout_marginBottom="10sp" />
+    
+    <Button
+        android:layout_height="wrap_content"
+     	android:layout_width="fill_parent"
+    	android:layout_weight="0"
+    	android:layout_marginBottom="10sp"
+    	android:layout_marginLeft="10sp"
+    	android:layout_marginRight="10sp"
+     	android:text="@string/load_button"
+ 		android:textSize="40sp"
+		android:textStyle="bold"
+     	android:onClick="displayPage" />
+	
+	<Button
+        android:layout_height="wrap_content"
+     	android:layout_width="fill_parent"
+     	android:layout_weight="0"
+    	android:layout_marginLeft="10sp"
+        android:layout_marginRight="10sp"
+        android:layout_marginBottom="10sp"
+     	android:text="@string/search_button"
+ 		android:textSize="40sp"
+		android:textStyle="bold"
+     	android:onClick="searchWiki" />
+	
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:layout_gravity="center"
+        android:layout_marginBottom="10sp"
+        android:src="@drawable/tetractys_productions_logo"
+        android:contentDescription="@string/company_logo_description" />
+</LinearLayout>

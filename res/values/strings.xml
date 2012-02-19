@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">ArchWiki - Offline</string>
+    <string name="search_hint">Search ArchWiki Offline</string>
+    <string name="app_logo_description">ArchWiki Offline</string>
+    <string-array name="topics">
+        <item>Arch Linux</item>
+        <item>The Arch Way</item>
+        <item>Arch Compared to Other Distributions</item>
+        <item>Official Installation Guide</item>
+        <item>Beginners\' Guide</item>
+        <item>General Recommendations</item>
+        <item>FAQ</item>
+        <item>Getting Involved</item>
+        <item>Index</item>
+    </string-array>
+    <string name="load_button">Load Topic</string>
+    <string name="search_button">Search Wiki</string>
+    <string name="company_logo_description">Tetractys Productions LLC</string>
+</resources>
