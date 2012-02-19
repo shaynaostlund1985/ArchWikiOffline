@@ -14,3 +14,8 @@ BETA ROADMAP:
 -Corrected Local URL loading
 -Improved stability
 -Unit/UI Testing
+
+
+KNOWN ISSUES:
+-Beginner's Guide topic loading seems to be buggy.
+-Local URL's don't load correctly.
