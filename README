@@ -1,35 +1,62 @@
-AWOL: ArchWiki Offline (Alpha I)
+AWOL: ArchWiki Offline
+Version: 0.1.1 (Alpha)
+License: GPLv3
+Copyright: (C) 2012  Tetractys Productions LLC.
+Author: Exiquio Cooper-Anderson (exiquio [at] gmail [dot] com)
 
 Description:
 
-ArchWki Offline provides users an offline version of the popular Linux resource,
-ArchWiki (http://wiki.archlinux.org). It is based on OpenZIM (http://www.openzim.org)
-and uses zimreader-java (http://svn.openzim.org/viewvc.cgi/trunk/zimreader-java/).
+ArchWki Offline provides users an offline version of the popular Linux resource, ArchWiki. It is based on OpenZIM and relies on zimreader-java.
+This software is alpha software and meant for testing purposes as development pushes forward towards a "feature complete" beta. 
 
-This software is alpha software (http://en.wikipedia.org/wiki/Software_release_life_cycle#Alpha)
-and meant for testing purposes as we push towards a "feature complete" beta (see: BETA_TODO). 
+Features:
 
-Version: 0.1.1 - Alpha I
+-Offline access to the popular linux resource, ArchWiki (wiki.archlinux.org)
+-Quickly load the most useful topics
+-Quick search ArchWiki topics
 
-License: GPLv3
+Beta Roadmap:
 
-Copyright: (C) 2012  Tetractys Productions LLC.
+-New Art and Color Scheme By Vivo aka ArtVictim
+-Search Suggestions
+-MenuActivity
+-Search Menu Option
+-Find In Page Menu Option (Implement Find in Page)
+-Home Menu Option
+-Settings Option (Implement Settings)
+-ActionBar (mirror menu functionality)
+-Removable Visual Zoom Controls 
+-Bookmarks & Bookmark Menu Option
+-Google Analytics Opt-In
+-New ArchWiki ZIMFile
+-Corrected Local URL loading
+-Improved stability
+-Unit/UI Testing
 
-Author: Exiquio Cooper-Anderson (exiquio [at] gmail [dot] com)
+Project Page:
+
+-https://github.com/tetractysproductions/ArchWikiOffline
+
+References:
+
+-ArchWiki: http://wiki.archlinux.org
+-OpenZim Project: http://www.openzim.org
+-zimreader-java: http://svn.openzim.org/viewvc.cgi/trunk/zimreader-java/
+-Alpha?: http://en.wikipedia.org/wiki/Software_release_life_cycle#Alpha
 
 Android Market: http://goo.gl/44qdP
+Amazon AppStore: TODO
 
 Changelog:
+0.1.2 
+-Tweaked for compatability with Amazon AppStore
+
 0.1.1
 -Disabled Begginners' Guide topic due to instability
 
 0.1.0
 -Alpha I
 
+*The ArchWiki name, Arch Linux name and the Arch Linux Logo are recognized trademarks of Judd Vinet and Aaron Griffin.
 
-
-
-
-The ArchWiki name, Arch Linux name and the Arch Linux Logo are recognized trademarks of Judd Vinet and Aaron Griffin.
-
-The AWOL Logo, Tetractys Productions and Tetractys Productions Logo are recognized trademarks of Tetractys Productions LLC.
+The AWOL Logo, Tetractys Productions and Tetractys Productions Logo are recognized trademarks of Tetractys Productions* LLC.
