@@ -1,5 +1,5 @@
 AWOL: ArchWiki Offline
-Version: 0.1.2 (Alpha)
+Version: 0.1.3 (Alpha)
 License: GPLv3
 Copyright: (C) 2012  Tetractys Productions LLC.
 Author: Exiquio Cooper-Anderson (exiquio [at] gmail [dot] com)
@@ -11,27 +11,24 @@ This software is alpha software and meant for testing purposes as development pu
 
 Features:
 
--Offline access to the popular linux resource, ArchWiki (wiki.archlinux.org)
+-Offline access to the popular GNU/Linux resource, ArchWiki (http://wiki.archlinux.org)
 -Quickly load the most useful topics
 -Quick search ArchWiki topics
+-Search in page
 
 Beta Roadmap:
-
--New Art and Color Scheme By Vivo aka ArtVictim
 -Search Suggestions
--MenuActivity
--Search Menu Option
--Find In Page Menu Option (Implement Find in Page)
--Home Menu Option
--Settings Option (Implement Settings)
--ActionBar (mirror menu functionality)
--Removable Visual Zoom Controls 
--Bookmarks & Bookmark Menu Option
+-Action Bar (API 14+)
+-Removable Visual Zoom Controls (API 11+)
+-Bookmarks
 -Google Analytics Opt-In
--New ArchWiki ZIMFile
--Corrected Local URL loading
--Improved stability
--Unit/UI Testing
+-ZIMFile changes
+-Handle incorrect URL loading
+-Unit Testing
+-UI Testing
+-Improve Stability
+-Final Artwork by Vivo aka ArtVictim
+
 
 Project Page:
 
@@ -40,21 +37,28 @@ Project Page:
 References:
 
 -ArchWiki: http://wiki.archlinux.org
+-arch-wiki-docs: http://www.archlinux.org/packages/community/any/arch-wiki-docs/
 -OpenZim Project: http://www.openzim.org
 -zimreader-java: http://svn.openzim.org/viewvc.cgi/trunk/zimreader-java/
 -Alpha?: http://en.wikipedia.org/wiki/Software_release_life_cycle#Alpha
 
 Android Market: http://goo.gl/44qdP
-Amazon AppStore: TODO
+Amazon AppStore: http://www.amazon.com/gp/product/B007D472LG
 
 APK: misc/ArchWikiOffline.apk
 
 Changelog:
+
+0.1.3
+-New placeholder artwork
+-Menu: Implemented Home, Find in Page. Search and About menu items
+-Add explicit support for large screens for Kindle Fire (and others)
+
 0.1.2 
--Tweaked for compatability with Amazon AppStore
+-Tweaked for compatibility with Amazon AppStore
 
 0.1.1
--Disabled Begginners' Guide topic due to instability
+-Disabled Beginners' Guide topic due to instability
 
 0.1.0
 -Alpha I

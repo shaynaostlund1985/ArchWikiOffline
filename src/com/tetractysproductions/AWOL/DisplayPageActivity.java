@@ -20,26 +20,35 @@
 
 package com.tetractysproductions.AWOL;
 
+import java.lang.reflect.Method;
 import java.net.URLEncoder;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.EditText;
+import android.widget.Toast;
 
 import com.tetractysproductions.OfflineWiki.OfflineWikiReader;
 
 public class DisplayPageActivity extends Activity {
 	// CONSTANTS
 	private static String TAG = "AWOL - LPA";
+	private static CharSequence ABOUT_TEXT = "AWOL: ArchWiki Offline - Copyright (C) 2012 Tetractys Productions. All rights reserved. Written by Exiquio Cooper-Anderson. GPLv3 (http://www.gnu.org/licenses/)";
 	
 	// PRIVATE INSTANCE VARIABLES
 	private Context context;
@@ -71,6 +80,80 @@ public class DisplayPageActivity extends Activity {
 	
 	// PUBLIC INSTANCE METHODS
 	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		Log.d(TAG, "creating options menu...");
+	    MenuInflater inflater = getMenuInflater();
+	    inflater.inflate(R.menu.dp_a_menu, menu);
+	    Log.d(TAG, "options menu created!");
+	    return true;
+	}
+	
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		Log.d(TAG, "menu item selected...");
+		switch (item.getItemId()) {
+			case R.id.menu_item_home:
+				Log.d(TAG, "menu_item_home selected");
+				Log.d(TAG, "lauching ArchWikiOfflineActivity");
+				Intent i = new Intent(context, ArchWikiOfflineActivity.class);                      
+				startActivity(i);
+				return true;
+			case R.id.menu_item_find_in_page:
+				Log.d(TAG, "menu_item_find_in_page selected");
+				Log.d(TAG, "getting user input...");
+				final EditText query_input = new EditText(context);
+				new AlertDialog.Builder(context)
+					.setTitle("Find In Page")
+					.setMessage("Enter search query...")
+					.setView(query_input)
+					.setPositiveButton(
+							"Find",
+							new DialogInterface.OnClickListener() {
+								public void onClick(DialogInterface dialog, int whichButton) {
+									Log.d(TAG, "find selected...");
+									String query = query_input.getText().toString();
+									Log.d(TAG, "find in page query: " + query);
+									Log.d(TAG, "calling webview.findAll()");
+								    WebView webview = (WebView) findViewById(R.id.webview);
+									webview.findAll(query);
+									// README: API 8 bug workaround (http://stackoverflow.com/questions/3698457/android-2-2-webview-search-problem)
+									// (http://code.google.com/p/android/issues/detail?id=9018) (exiquio)
+									try {
+									    Method m = WebView.class.getMethod("setFindIsUp", Boolean.TYPE);
+									    m.invoke(webview, true);
+									}
+									catch (Throwable ignored){} 
+									Log.d(TAG, "findAll() completed!");
+								}
+							}
+					 )
+			         .setNegativeButton(
+			        		 "Cancel",
+			        		 new DialogInterface.OnClickListener() {
+			        			 public void onClick(DialogInterface dialog, int whichButton) {
+			        				 Log.d(TAG, "cancel selected... doing nothing!");
+			        				 // Do nothing.
+			        			 }
+			        		}
+			        )
+			    .show();
+				return true;
+			case R.id.menu_item_search:
+	        	Log.d(TAG, "menu_item_search selected");
+	        	Log.d(TAG, "launching search");
+	        	onSearchRequested();
+	            return true;
+	        case R.id.menu_item_about:
+	        	Log.d(TAG, "menu_item_about_selected");
+	        	toastAbout();
+	            return true;
+	        default:
+	        	Log.d(TAG, "default, calling fallback");
+	            return super.onOptionsItemSelected(item);
+	    }
+	}
+	
+	@Override
     public boolean onSearchRequested() {
 		Log.d(TAG, "onSearchRequested called...");
 		Log.d(TAG, "loading bundle...");
@@ -84,6 +167,13 @@ public class DisplayPageActivity extends Activity {
         return true;
     }
     
+	public void toastAbout() {
+		Log.d(TAG, "toastAbout called, making toast...");
+		Toast toast = Toast.makeText(context, ABOUT_TEXT, Toast.LENGTH_LONG);
+		toast.show();	
+		Log.d(TAG, "done toasting!");
+	}
+	
 	private String getWikiPage(String wiki_filepath, String page_title) {
 		String results = null;
 		OfflineWikiReader owr = new OfflineWikiReader(wiki_filepath);
@@ -113,16 +203,16 @@ public class DisplayPageActivity extends Activity {
 		}
 		
 	    @Override
-	    public void onPageFinished(WebView view, String url) {
+	    public void onPageFinished(WebView wv, String url) {
 	    	Log.d(TAG, "performing JavaScript operations...");
 			FormatMarkupTask task = new FormatMarkupTask();
-			task.execute(view);	
+			task.execute(wv); // FIXME: This has to be bad coding (exiquio)	
 	        Log.d(TAG, "JavaScript operations performed!");
 	    }
 	}
 	
 	private class FormatMarkupTask extends AsyncTask<WebView, Void, String> {
-		private WebView view; 
+		private WebView webview;
 		
 		@Override
 		protected void onPreExecute() {
@@ -134,8 +224,8 @@ public class DisplayPageActivity extends Activity {
 		}
 		
 		@Override
-		protected String doInBackground(WebView... views) {
-	    	view = views[0];
+		protected String doInBackground(WebView... webviews) {
+			webview = webviews[0];
 			Log.d(TAG, "creating scripts...");
 	    	// FIXME: Perform the following operations in a more standard oriented way. (exiquio)
 	    	String script_1 = "document.getElementById('archnavbarmenu').innerHTML='';";
@@ -149,7 +239,7 @@ public class DisplayPageActivity extends Activity {
 		@Override
 		protected void onPostExecute(String script) {
 			Log.d(TAG, "running scripts...");
-			view.loadUrl(script);
+			webview.loadUrl(script);
 			Log.d(TAG, "scripts completed!");
 			Log.d(TAG, "FormatMarkupTask completed!");
 			dialog.dismiss(); 
@@ -182,8 +272,8 @@ public class DisplayPageActivity extends Activity {
 		    //webview_settings.setAllowContentAccess(false); // FIXME: requires API 11 (exiquio)
 		    webview_settings.setAllowFileAccess(false); 
 		    //webview_settings.setDisplayZoomControls(false); FIXME: requires API 11 (exiquio)
-		    webview_settings.setJavaScriptEnabled(true);
-		    webview_settings.setLoadWithOverviewMode(true); // TODO: answer SO question (http://stackoverflow.com/questions/1991219/android-webview-wrap-content) (exiquio)
+		    webview_settings.setJavaScriptEnabled(true); // TODO: Defer? (exiquio)
+		    webview_settings.setLoadWithOverviewMode(true);
 		    webview_settings.setUseWideViewPort(true);
 		    webview_settings.setBuiltInZoomControls(true);
 		    webview.loadData(URLEncoder.encode(html).replaceAll("\\+"," "), "text/html", "utf-8");

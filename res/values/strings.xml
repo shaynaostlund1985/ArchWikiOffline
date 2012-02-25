@@ -8,7 +8,7 @@
         <item>The Arch Way</item>
         <item>Arch Compared to Other Distributions</item>
         <item>Official Installation Guide</item>
-        <!--  <item>Beginners\' Guide</item> -->
+        <!--<item>Beginners\' Guide</item> -->
         <item>General Recommendations</item>
         <item>FAQ</item>
         <item>Getting Involved</item>
@@ -17,4 +17,8 @@
     <string name="load_button">Load Topic</string>
     <string name="search_button">Search Wiki</string>
     <string name="company_logo_description">Tetractys Productions LLC</string>
+    <string name="menu_item_home">Home</string>
+    <string name="menu_item_find_in_page">Find In Page</string>
+    <string name="menu_item_search">Search</string>
+    <string name="menu_item_about">About</string>
 </resources>

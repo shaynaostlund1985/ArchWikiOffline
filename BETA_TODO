@@ -1,20 +1,17 @@
 BETA ROADMAP:
--New Art and Color Scheme By Vivo aka ArtVictim
 -Search Suggestions
--MenuActivity
--Search Menu Option
--Find In Page Menu Option (Implement Find in Page)
--Home Menu Option
--Settings Option (Implement Settings)
--ActionBar (mirror menu functionality)
--Removable Visual Zoom Controls 
--Bookmarks & Bookmark Menu Option
+-Action Bar (API 14+)
+-Removable Visual Zoom Controls (API 11+)
+-Bookmarks
 -Google Analytics Opt-In
--New ArchWiki ZIMFile
--Corrected Local URL loading
--Improved stability
--Unit/UI Testing
-
+-ZIMFile changes
+-Handle incorrect URL loading
+-Unit Testing
+-UI Testing
+-Improve Stability
+-Final Artwork by Vivo aka ArtVictim
+-Need a way to navigate "Find in Page" results?
+-Replace any String with res/value/strings.xml values
 
 KNOWN ISSUES:
 -Beginner's Guide topic loading seems to be buggy.

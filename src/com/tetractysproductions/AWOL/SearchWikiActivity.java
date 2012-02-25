@@ -32,16 +32,21 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class SearchWikiActivity extends ListActivity {
 	// CONSTANTS
 	private static String TAG = "AWOL - SWA";
+	private static CharSequence ABOUT_TEXT = "AWOL: ArchWiki Offline - Copyright (C) 2012 Tetractys Productions. All rights reserved. Written by Exiquio Cooper-Anderson. GPLv3 (http://www.gnu.org/licenses/)";
 	private static String DONT_DISPLAY_ME = " - ArchWiki.html";
 	
 	// PRIVATE INSTANCE VARIABLES
@@ -81,6 +86,40 @@ public class SearchWikiActivity extends ListActivity {
 	
 	// PUBLIC INSTANCE METHODS
 	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		Log.d(TAG, "creating options menu...");
+	    MenuInflater inflater = getMenuInflater();
+	    inflater.inflate(R.menu.sw_a_menu, menu);
+	    Log.d(TAG, "options menu created!");
+	    return true;
+	}
+	
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		Log.d(TAG, "menu item selected...");
+		switch (item.getItemId()) {
+			case R.id.menu_item_home:
+				Log.d(TAG, "menu_item_home selected");
+				Log.d(TAG, "lauching ArchWikiOfflineActivity");
+				Intent i = new Intent(context, ArchWikiOfflineActivity.class);                      
+				startActivity(i);
+				return true;
+			case R.id.menu_item_search:
+	        	Log.d(TAG, "menu_item_search selected");
+	        	Log.d(TAG, "launching search");
+	        	onSearchRequested();
+	            return true;
+	        case R.id.menu_item_about:
+	        	Log.d(TAG, "menu_item_about_selected");
+	        	toastAbout();
+	            return true;
+	        default:
+	        	Log.d(TAG, "default, calling fallback");
+	            return super.onOptionsItemSelected(item);
+	    }
+	}
+	
+	@Override
     public boolean onSearchRequested() {
 		Log.d(TAG, "onSearchRequested called...");
 		Log.d(TAG, "loading bundle...");
@@ -93,6 +132,13 @@ public class SearchWikiActivity extends ListActivity {
         Log.d(TAG, "completed response to search request!");
         return true;
     }
+	
+	public void toastAbout() {
+		Log.d(TAG, "toastAbout called, making toast...");
+		Toast toast = Toast.makeText(context, ABOUT_TEXT, Toast.LENGTH_LONG);
+		toast.show();	
+		Log.d(TAG, "done toasting!");
+	}
 	
 	// PRIVATE INSTANCE METHODS
 	private void displayPage(String page_title) {
