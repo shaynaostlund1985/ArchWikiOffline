@@ -16,3 +16,4 @@ BETA ROADMAP:
 KNOWN ISSUES:
 -Beginner's Guide topic loading seems to be buggy.
 -Local URL's don't load correctly.
+-Is "find in page" broken on API12+?
