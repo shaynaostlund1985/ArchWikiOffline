@@ -27,9 +27,6 @@ import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.io.OutputStream;
 
-import android.app.Activity;
-import android.app.ProgressDialog;
-import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -42,37 +39,21 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
-import android.widget.Toast;
 
-public class ArchWikiOfflineActivity extends Activity {
-	// CONSTANTS
+import com.tetractysproductions.AWOL.DefaultActivity;
+
+public class ArchWikiOfflineActivity extends DefaultActivity {
 	private static String TAG = "AWOL - AWO_A";
-	private static CharSequence ABOUT_TEXT = "AWOL: ArchWiki Offline - Copyright (C) 2012 Tetractys Productions. All rights reserved. Written by Exiquio Cooper-Anderson. GPLv3 (http://www.gnu.org/licenses/)";
-	
-	// PRIVATE INSTANCE VARIABLES
-	private Context context;
-    private File config_dir;
-	private String wiki_filepath;
-	private ProgressDialog dialog;
 	private String topic;
 	
-	// LIFECYCLE CALLBACKS
+	// PUBLIC METHODS
 	@Override
     public void onCreate(Bundle savedInstanceState) {
     	super.onCreate(savedInstanceState);
-    	setContentView(R.layout.main);
-    	
-        Log.d(TAG, "ArchWikiOfflineActivity created1...");
-        context = this;
-        Log.d(TAG, "context: " + context);
-        config_dir = new File(context.getFilesDir().getAbsoluteFile() + "/awol");
-        Log.d(TAG, "config_dir: " + config_dir.getAbsolutePath());
-        wiki_filepath = config_dir.getAbsolutePath() + "/archwiki.zim";
-        dialog = new ProgressDialog(context);
-   
+    	setContentView(R.layout.main);    	
+        Log.d(TAG, "ArchWikiOfflineActivity created...");
         ConfigSetupTask task = new ConfigSetupTask();
         task.execute();
-        
         Spinner topic_spinner = (Spinner) findViewById(R.id.topic_spinner);
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(
         		context,
@@ -84,7 +65,6 @@ public class ArchWikiOfflineActivity extends Activity {
         topic_spinner.setOnItemSelectedListener(new TopicSelectedListener());
     }
 	
-	// PUBLIC INSTANCE METHODS
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		Log.d(TAG, "creating options menu...");
@@ -113,20 +93,6 @@ public class ArchWikiOfflineActivity extends Activity {
 	    }
 	}
 	
-	@Override
-    public boolean onSearchRequested() {
-		Log.d(TAG, "onSearchRequested called...");
-		Log.d(TAG, "loading bundle...");
-    	Bundle app_data = new Bundle();
-    	app_data.putString("wiki_filepath", wiki_filepath);
-    	Log.d(TAG, "bundle loaded!");
-    	Log.d(TAG, "calling startSearch...");
-        startSearch(null, false, app_data, false);
-        Log.d(TAG, "startSearch called!");
-        Log.d(TAG, "completed response to search request!");
-        return true;
-    }
-
 	public void searchWiki(View view) {
     	Log.d(TAG, "searchWiki called");
     	Log.d(TAG, "requesting search...");
@@ -134,19 +100,12 @@ public class ArchWikiOfflineActivity extends Activity {
     	Log.d(TAG, "search requested!");
     }
     
-	public void toastAbout() {
-		Log.d(TAG, "toastAbout called, making toast...");
-		Toast toast = Toast.makeText(context, ABOUT_TEXT, Toast.LENGTH_LONG);
-		toast.show();	
-		Log.d(TAG, "done toasting!");
-	}
-	
 	public void displayPage(View view) {
     	Log.d(TAG, "displayPage called...");
     	Log.d(TAG, "wiki topic: " + topic);
     	Intent intent = new Intent(context, DisplayPageActivity.class);
     	Log.d(TAG, "loading extras...");
-    	intent.putExtra("wiki_filepath", wiki_filepath);
+    	//intent.putExtra("wiki_filepath", wiki_filepath);
     	if(topic.equals("Index")) {
     		intent.putExtra("page_title", "index");
     	} else {
@@ -190,7 +149,8 @@ public class ArchWikiOfflineActivity extends Activity {
 	        	try {
 	        		FileOutputStream wiki_OS = new FileOutputStream(wiki_filepath, false);
 	        		OutputStream os = new BufferedOutputStream(wiki_OS);
-	        		byte[] buffer = new byte[1024];
+	        		//byte[] buffer = new byte[1024];
+	        		byte[] buffer = new byte[8192];
 	        		int byte_read = 0;
 	        		InputStream wiki_IS = context.getResources().openRawResource(R.raw.archwiki);
 	        		while((byte_read = wiki_IS.read(buffer)) != -1) {
@@ -222,7 +182,6 @@ public class ArchWikiOfflineActivity extends Activity {
 
         public void onNothingSelected(AdapterView<?> parent) {
         	// DO NOTHING 
-        	// TODO is this appropriate? (exiquio)
         }
     }
 }

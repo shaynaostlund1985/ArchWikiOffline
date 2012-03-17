@@ -1,20 +1,22 @@
 AWOL: ArchWiki Offline
-Version: 0.1.3 (Alpha)
+Version: 0.1.4 (Alpha)
 License: GPLv3
 Copyright: (C) 2012  Tetractys Productions LLC.
 Author: Exiquio Cooper-Anderson (exiquio [at] gmail [dot] com)
 
 Description:
-
-ArchWki Offline provides users an offline version of the popular Linux resource, ArchWiki. It is based on OpenZIM and relies on zimreader-java.
-This software is alpha software and meant for testing purposes as development pushes forward towards a "feature complete" beta. 
+ArchWki Offline provides users an offline version of the popular Linux resource, ArchWiki. It is based on OpenZIM, zimreader-java in particular.
+This software is alpha software and meant for testing purposes as development pushes forward towards a "feature complete" beta. Comments and other
+feedback is appreciated and can be expressed either via "Issues" on the Project Page or by posting on the Project Thread.  
 
 Features:
-
 -Offline access to the popular GNU/Linux resource, ArchWiki (http://wiki.archlinux.org)
 -Quickly load the most useful topics
 -Quick search ArchWiki topics
--Search in page
+-Search in page (partially implemented)
+
+Permissions Required:
+-WRITE_EXTERNAL_STORAGE: This app needs to be able to write to an SD card if possible.
 
 Beta Roadmap:
 -Search Suggestions
@@ -22,32 +24,42 @@ Beta Roadmap:
 -Removable Visual Zoom Controls (API 11+)
 -Bookmarks
 -Google Analytics Opt-In
--ZIMFile changes
+-Reimplementation of ZIMFile related operations
+-New Zimfile
 -Handle incorrect URL loading
--Unit Testing
--UI Testing
--Improve Stability
+-Add Random button to "home page"
 -Final Artwork by Vivo aka ArtVictim
 
-
 Project Page:
-
 -https://github.com/tetractysproductions/ArchWikiOffline
+
+Project Thread:
+-https://bbs.archlinux.org/viewtopic.php?pid=1070814
+
 
 References:
 
--ArchWiki: http://wiki.archlinux.org
--arch-wiki-docs: http://www.archlinux.org/packages/community/any/arch-wiki-docs/
--OpenZim Project: http://www.openzim.org
--zimreader-java: http://svn.openzim.org/viewvc.cgi/trunk/zimreader-java/
--Alpha?: http://en.wikipedia.org/wiki/Software_release_life_cycle#Alpha
-
-Android Market: http://goo.gl/44qdP
-Amazon AppStore: http://www.amazon.com/gp/product/B007D472LG
-
-APK: misc/ArchWikiOffline.apk
+-ArchWiki: 
+	http://wiki.archlinux.org
+-arch-wiki-docs: 
+	http://www.archlinux.org/packages/community/any/arch-wiki-docs/
+-OpenZim Project: 
+	http://www.openzim.org
+-zimreader-java:
+	http://svn.openzim.org/viewvc.cgi/trunk/zimreader-java/
+-Alpha?:
+	http://en.wikipedia.org/wiki/Software_release_life_cycle#Alpha
+-AWOL on Play Store: 
+	http://goo.gl/ZHXwV
+-AWOL on Amazon AppStore: 
+	http://www.amazon.com/gp/product/B007D472LG
 
 Changelog:
+
+0.1.4
+-API minimum level lowered to 7 (Android 2.1)
+-Improved Stability;)
+-Removed "index" from topics list
 
 0.1.3
 -New placeholder artwork
@@ -63,6 +75,11 @@ Changelog:
 0.1.0
 -Alpha I
 
-*The ArchWiki name, Arch Linux name and the Arch Linux Logo are recognized trademarks of Judd Vinet and Aaron Griffin.
+*****Awwhhh
+Thanks Judd Vinet, Aaron Griffon, the Arch Linux developers, package maintainers, forum moderators and wiki administrators as well
+as the general Arch Linux Community of which Tetractys Productions is proud to be a member of. 
+*****hhhwwA
 
-The AWOL Logo, Tetractys Productions and Tetractys Productions Logo are recognized trademarks of Tetractys Productions* LLC.
+*The ArchWiki name, Arch Linux name and the Arch Linux Logo are recognized trademarks of Judd Vinet and Aaron Griffin. 
+
+The AWOL Logo, Tetractys Productions and Tetractys Productions Logo are recognized trademarks of Tetractys Production* LLC.

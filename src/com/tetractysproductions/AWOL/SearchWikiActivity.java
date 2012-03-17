@@ -44,20 +44,17 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 public class SearchWikiActivity extends ListActivity {
-	// CONSTANTS
 	private static String TAG = "AWOL - SWA";
 	private static CharSequence ABOUT_TEXT = "AWOL: ArchWiki Offline - Copyright (C) 2012 Tetractys Productions. All rights reserved. Written by Exiquio Cooper-Anderson. GPLv3 (http://www.gnu.org/licenses/)";
 	private static String DONT_DISPLAY_ME = " - ArchWiki.html";
-	
-	// PRIVATE INSTANCE VARIABLES
 	private Context context;
 	private ProgressDialog dialog;
 	private String wiki_filepath;
 	private String query;
 	
-	// LIFECYCLE CALLBACKS
+	// PUBLIC METHODS
 	@Override
-	protected void onCreate(Bundle savedInstanceState) {
+	public void onCreate(Bundle savedInstanceState) {
 	    super.onCreate(savedInstanceState);
 	    context = this;
 	    dialog = new ProgressDialog(context);
@@ -83,8 +80,7 @@ public class SearchWikiActivity extends ListActivity {
 		task.execute(query);
 		Log.d(TAG, "SearchWikiTask should have reported complete!");
 	}
-	
-	// PUBLIC INSTANCE METHODS
+
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		Log.d(TAG, "creating options menu...");
@@ -140,7 +136,7 @@ public class SearchWikiActivity extends ListActivity {
 		Log.d(TAG, "done toasting!");
 	}
 	
-	// PRIVATE INSTANCE METHODS
+	// PRIVATE METHODS
 	private void displayPage(String page_title) {
     	Log.d(TAG, "starting displayPage...");
     	Log.d(TAG, "page_title: " + page_title);

@@ -23,10 +23,7 @@ package com.tetractysproductions.AWOL;
 import java.lang.reflect.Method;
 import java.net.URLEncoder;
 
-import android.app.Activity;
 import android.app.AlertDialog;
-import android.app.ProgressDialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
@@ -41,44 +38,30 @@ import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.EditText;
-import android.widget.Toast;
 
+import com.tetractysproductions.AWOL.DefaultActivity;
 import com.tetractysproductions.OfflineWiki.OfflineWikiReader;
 
-public class DisplayPageActivity extends Activity {
-	// CONSTANTS
+public class DisplayPageActivity extends DefaultActivity {
 	private static String TAG = "AWOL - LPA";
-	private static CharSequence ABOUT_TEXT = "AWOL: ArchWiki Offline - Copyright (C) 2012 Tetractys Productions. All rights reserved. Written by Exiquio Cooper-Anderson. GPLv3 (http://www.gnu.org/licenses/)";
 	
-	// PRIVATE INSTANCE VARIABLES
-	private Context context;
-	private ProgressDialog dialog;
-	private String wiki_filepath;
-
-	// LIFECYCLE CALLBACKS
+	// PUBLIC METHODS
 	@Override
-	protected void onCreate(Bundle savedInstanceState) {
+	public void onCreate(Bundle savedInstanceState) {
 	    super.onCreate(savedInstanceState);
 		Log.d(TAG, "DisplayPageActivity created...");
-    	context = this;
-        dialog = new ProgressDialog(context);
 	    setContentView(R.layout.display_page);
-
 	    Log.d(TAG, "unloading extras...");
 	    Bundle extras = getIntent().getExtras(); // FIXME This is not checking for null and it should. (exiquio)
-	    wiki_filepath = extras.getString("wiki_filepath");
-	    Log.d(TAG, "wiki_filepath: " + wiki_filepath);
 	    String page_title = extras.getString("page_title");
 	    Log.d(TAG, "page_title: " + page_title);
 	    Log.d(TAG, "extras unloaded!");
-		
 	    Log.d(TAG, "getting wiki page...");
 		LoadWikiPageTask task = new LoadWikiPageTask();
 		task.execute(page_title);
 		Log.d(TAG, "finished getting wiki page!");
 	}
 	
-	// PUBLIC INSTANCE METHODS
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		Log.d(TAG, "creating options menu...");
@@ -115,7 +98,8 @@ public class DisplayPageActivity extends Activity {
 									Log.d(TAG, "find in page query: " + query);
 									Log.d(TAG, "calling webview.findAll()");
 								    WebView webview = (WebView) findViewById(R.id.webview);
-									webview.findAll(query);
+									int fip_value = webview.findAll(query);
+									Log.d(TAG, "fip_value: " + fip_value);
 									// README: API 8 bug workaround (http://stackoverflow.com/questions/3698457/android-2-2-webview-search-problem)
 									// (http://code.google.com/p/android/issues/detail?id=9018) (exiquio)
 									try {
@@ -123,6 +107,7 @@ public class DisplayPageActivity extends Activity {
 									    m.invoke(webview, true);
 									}
 									catch (Throwable ignored){} 
+									webview.findNext(false);
 									Log.d(TAG, "findAll() completed!");
 								}
 							}
@@ -153,27 +138,8 @@ public class DisplayPageActivity extends Activity {
 	    }
 	}
 	
-	@Override
-    public boolean onSearchRequested() {
-		Log.d(TAG, "onSearchRequested called...");
-		Log.d(TAG, "loading bundle...");
-    	Bundle app_data = new Bundle();
-    	app_data.putString("wiki_filepath", wiki_filepath);
-    	Log.d(TAG, "bundle loaded!");
-    	Log.d(TAG, "calling startSearch...");
-        startSearch(null, false, app_data, false);
-        Log.d(TAG, "startSearch called!");
-        Log.d(TAG, "completed response to search request!");
-        return true;
-    }
     
-	public void toastAbout() {
-		Log.d(TAG, "toastAbout called, making toast...");
-		Toast toast = Toast.makeText(context, ABOUT_TEXT, Toast.LENGTH_LONG);
-		toast.show();	
-		Log.d(TAG, "done toasting!");
-	}
-	
+	// PRIVATE METHODS
 	private String getWikiPage(String wiki_filepath, String page_title) {
 		String results = null;
 		OfflineWikiReader owr = new OfflineWikiReader(wiki_filepath);
@@ -228,7 +194,7 @@ public class DisplayPageActivity extends Activity {
 			webview = webviews[0];
 			Log.d(TAG, "creating scripts...");
 	    	// FIXME: Perform the following operations in a more standard oriented way. (exiquio)
-	    	String script_1 = "document.getElementById('archnavbarmenu').innerHTML='';";
+	    	String script_1 = "document.getElementById('archnavbarmenu').innerHTML='<p>Visit <a href=\"http://wiki.archlinux.org/\">ArchWiki</a> on the Web</p>';";
 	    	String script_2 = "document.getElementById('jump-to-nav').innerHTML='';";
 	    	String script_3 = "document.getElementById('column-one').innerHTML='';";
 	    	String script_4 = "document.getElementById('footer').innerHTML='<p>Content is available under GNU Free Documentation License 1.2<p>'";     
