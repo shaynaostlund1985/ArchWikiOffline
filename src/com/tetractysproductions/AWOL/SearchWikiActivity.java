@@ -24,10 +24,7 @@ import java.util.List;
 
 import com.tetractysproductions.OfflineWiki.OfflineWikiReader;
 
-import android.app.ListActivity;
-import android.app.ProgressDialog;
 import android.app.SearchManager;
-import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -41,46 +38,58 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
-public class SearchWikiActivity extends ListActivity {
+public class SearchWikiActivity extends DefaultListActivity {
 	private static String TAG = "AWOL - SWA";
-	private static CharSequence ABOUT_TEXT = "AWOL: ArchWiki Offline - Copyright (C) 2012 Tetractys Productions. All rights reserved. Written by Exiquio Cooper-Anderson. GPLv3 (http://www.gnu.org/licenses/)";
-	private static String DONT_DISPLAY_ME = " - ArchWiki.html";
-	private Context context;
-	private ProgressDialog dialog;
-	private String wiki_filepath;
 	private String query;
-	
-	// PUBLIC METHODS
-	@Override
-	public void onCreate(Bundle savedInstanceState) {
-	    super.onCreate(savedInstanceState);
-	    context = this;
-	    dialog = new ProgressDialog(context);
-		Log.d(TAG, "SearchWikiActivity created...");
+	private SearchWikiTask search_wiki_task = new SearchWikiTask();
 
+	// PRIVATE METHODS
+	private void displayPage(String page_title) {
+    	Log.d(TAG, "starting displayPage...");
+    	Log.d(TAG, "page_title: " + page_title);
+    	Intent intent = new Intent("com.tetractysproductions.AWOL.DISPLAY_WIKI_PAGE");
+    	Log.d(TAG, "packing extras...");
+    	intent.putExtra("wiki_filepath", wiki_filepath);
+    	intent.putExtra("page_title", page_title);
+    	Log.d(TAG, "extras packed!");
+    	Log.d(TAG, "calling DisplayPageActivity...");
+    	startActivity(intent);
+    	Log.d(TAG, "displayPage done!");
+    }
+	
+	private List<String> searchWiki(String wiki_filepath, String query, boolean ignore_case) {
+		List<String> results = null;
+		OfflineWikiReader owr = new OfflineWikiReader(wiki_filepath);
+		results = owr.search(query, ignore_case);
+		return results;
+	}
+	
+	// PROTECTED METHODS
+	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+	    super.onCreate(savedInstanceState);
+		Log.d(TAG, "SearchWikiActivity created...");
 	    Log.d(TAG, "unloading search variables...");
 	    Intent intent = getIntent();
-	    final Bundle app_data = intent.getBundleExtra(SearchManager.APP_DATA);
-	    if(app_data != null) {
-	    	wiki_filepath = app_data.getString("wiki_filepath");
-	    	Log.d(TAG, "wiki_filepath: " + wiki_filepath);
-	    } else {
-	    	Log.w(TAG, "app_data is null!"); // FIXME Handle problems like wiki_file being null (exiquio)
-	    }
 	    if(Intent.ACTION_SEARCH.equals(intent.getAction())) {
 	    	query = intent.getStringExtra(SearchManager.QUERY);
 	    	Log.d(TAG, "query: " + query);
 	        Log.d(TAG, "search variables unloaded!");
 	    }
-		
 		Log.d(TAG, "starting SearchWikiTask...");
-		SearchWikiTask task = new SearchWikiTask();
-		task.execute(query);
+		SearchWikiTask search_wiki_task = new SearchWikiTask();
+		search_wiki_task.execute(query);
 		Log.d(TAG, "SearchWikiTask should have reported complete!");
 	}
+	
+	@Override
+	protected void onDestroy() {
+		super.onDestroy();
+		search_wiki_task.cancel(true);
+	}
 
+	// PUBLIC METHODS
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		Log.d(TAG, "creating options menu...");
@@ -115,48 +124,6 @@ public class SearchWikiActivity extends ListActivity {
 	    }
 	}
 	
-	@Override
-    public boolean onSearchRequested() {
-		Log.d(TAG, "onSearchRequested called...");
-		Log.d(TAG, "loading bundle...");
-    	Bundle app_data = new Bundle();
-    	app_data.putString("wiki_filepath", wiki_filepath);
-    	Log.d(TAG, "bundle loaded!");
-    	Log.d(TAG, "calling startSearch...");
-        startSearch(null, false, app_data, false);
-        Log.d(TAG, "startSearch called!");
-        Log.d(TAG, "completed response to search request!");
-        return true;
-    }
-	
-	public void toastAbout() {
-		Log.d(TAG, "toastAbout called, making toast...");
-		Toast toast = Toast.makeText(context, ABOUT_TEXT, Toast.LENGTH_LONG);
-		toast.show();	
-		Log.d(TAG, "done toasting!");
-	}
-	
-	// PRIVATE METHODS
-	private void displayPage(String page_title) {
-    	Log.d(TAG, "starting displayPage...");
-    	Log.d(TAG, "page_title: " + page_title);
-    	Intent intent = new Intent(getBaseContext(), DisplayPageActivity.class);
-    	Log.d(TAG, "packing extras...");
-    	intent.putExtra("wiki_filepath", wiki_filepath);
-    	intent.putExtra("page_title", page_title);
-    	Log.d(TAG, "extras packed!");
-    	Log.d(TAG, "calling DisplayPageActivity...");
-    	startActivity(intent);
-    	Log.d(TAG, "displayPage done!");
-    }
-	
-	private List<String> searchWiki(String wiki_filepath, String query, boolean ignore_case) {
-		List<String> results = null;
-		OfflineWikiReader owr = new OfflineWikiReader(wiki_filepath);
-		results = owr.search(query, ignore_case);
-		return results;
-	}
-	
 	// PRIVATE INNER CLASSES
 	private class SearchWikiTask extends AsyncTask<String, Void, List<String>> {
 		@Override 
@@ -174,7 +141,7 @@ public class SearchWikiActivity extends ListActivity {
 			List<String> results = null;
 	    	results = searchWiki(wiki_filepath, queries[0], true);
 	    	for(int i = 0; i < results.size(); i++) {
-	    		results.set(i, results.get(i).replace(DONT_DISPLAY_ME, ""));
+	    		results.set(i, results.get(i).replace(app.DONT_DISPLAY_ME, ""));
 	    	}
 	    	Log.d(TAG, "finished searchWiki!");
 	    	return results;
@@ -190,7 +157,7 @@ public class SearchWikiActivity extends ListActivity {
 					public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 						String result_text = (String) ((TextView) view).getText();
 						Log.d(TAG, "result text: " + result_text);
-						displayPage(result_text + DONT_DISPLAY_ME);
+						displayPage(result_text + app.DONT_DISPLAY_ME);
 					}
 				}
 			);

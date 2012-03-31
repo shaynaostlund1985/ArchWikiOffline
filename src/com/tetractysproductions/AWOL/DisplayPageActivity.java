@@ -20,11 +20,9 @@
 
 package com.tetractysproductions.AWOL;
 
-import java.lang.reflect.Method;
+import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 
-import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.net.Uri;
@@ -37,31 +35,61 @@ import android.view.MenuItem;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
-import android.widget.EditText;
-
 import com.tetractysproductions.AWOL.DefaultActivity;
 import com.tetractysproductions.OfflineWiki.OfflineWikiReader;
 
 public class DisplayPageActivity extends DefaultActivity {
 	private static String TAG = "AWOL - LPA";
+	private LoadWikiPageTask load_wiki_page_task = new LoadWikiPageTask();
+	private FormatMarkupTask format_task = new FormatMarkupTask();
+	private String page_title;
+	private String live_url;
+	private Boolean loaded = false;
 	
-	// PUBLIC METHODS
+	// PRIVATE METHODS
+	private String getWikiPage(String wiki_filepath, String page_title) {
+		String results = null;
+		OfflineWikiReader owr = new OfflineWikiReader(wiki_filepath);
+		if(page_title.equals("index")) {
+			results = owr.getIndex();
+		} else {
+			results = owr.getPage(page_title);
+		}
+		Log.d(TAG, "results length: " + results.length());
+		return results;
+	}
+	
+	// PROTECTED METHODS
 	@Override
-	public void onCreate(Bundle savedInstanceState) {
+	protected void onCreate(Bundle savedInstanceState) {
 	    super.onCreate(savedInstanceState);
 		Log.d(TAG, "DisplayPageActivity created...");
 	    setContentView(R.layout.display_page);
 	    Log.d(TAG, "unloading extras...");
-	    Bundle extras = getIntent().getExtras(); // FIXME This is not checking for null and it should. (exiquio)
-	    String page_title = extras.getString("page_title");
-	    Log.d(TAG, "page_title: " + page_title);
-	    Log.d(TAG, "extras unloaded!");
-	    Log.d(TAG, "getting wiki page...");
-		LoadWikiPageTask task = new LoadWikiPageTask();
-		task.execute(page_title);
-		Log.d(TAG, "finished getting wiki page!");
+	    Intent intent = getIntent();
+	    if(intent.hasExtra("page_title")) {
+	    	page_title = intent.getExtras().getString("page_title");
+	    	live_url = "http://wiki.archlinux.org/index.php/" + page_title.replace(app.DONT_DISPLAY_ME, "").replaceAll(" ", "_");
+	        Log.d(TAG, "page_title: " + page_title);
+		    Log.d(TAG, "extras unloaded!");
+		    Log.d(TAG, "getting wiki page...");
+			load_wiki_page_task.execute(page_title);
+			Log.d(TAG, "finished getting wiki page!");
+	    } else {
+	    	Log.e(TAG, "page_title was not passed as an extra!");
+	    	toastError();
+	    	finish();
+	    }
 	}
 	
+	@Override
+	protected void onDestroy() {
+		super.onDestroy();
+		load_wiki_page_task.cancel(true);
+		format_task.cancel(true);
+	}
+	
+	// PUBLIC METHODS
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		Log.d(TAG, "creating options menu...");
@@ -74,60 +102,26 @@ public class DisplayPageActivity extends DefaultActivity {
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		Log.d(TAG, "menu item selected...");
+		Intent i;
 		switch (item.getItemId()) {
 			case R.id.menu_item_home:
 				Log.d(TAG, "menu_item_home selected");
 				Log.d(TAG, "lauching ArchWikiOfflineActivity");
-				Intent i = new Intent(context, ArchWikiOfflineActivity.class);                      
+				i = new Intent(context, ArchWikiOfflineActivity.class);                      
 				startActivity(i);
-				return true;
-			case R.id.menu_item_find_in_page:
-				Log.d(TAG, "menu_item_find_in_page selected");
-				Log.d(TAG, "getting user input...");
-				final EditText query_input = new EditText(context);
-				new AlertDialog.Builder(context)
-					.setTitle("Find In Page")
-					.setMessage("Enter search query...")
-					.setView(query_input)
-					.setPositiveButton(
-							"Find",
-							new DialogInterface.OnClickListener() {
-								public void onClick(DialogInterface dialog, int whichButton) {
-									Log.d(TAG, "find selected...");
-									String query = query_input.getText().toString();
-									Log.d(TAG, "find in page query: " + query);
-									Log.d(TAG, "calling webview.findAll()");
-								    WebView webview = (WebView) findViewById(R.id.webview);
-									int fip_value = webview.findAll(query);
-									Log.d(TAG, "fip_value: " + fip_value);
-									// README: API 8 bug workaround (http://stackoverflow.com/questions/3698457/android-2-2-webview-search-problem)
-									// (http://code.google.com/p/android/issues/detail?id=9018) (exiquio)
-									try {
-									    Method m = WebView.class.getMethod("setFindIsUp", Boolean.TYPE);
-									    m.invoke(webview, true);
-									}
-									catch (Throwable ignored){} 
-									webview.findNext(false);
-									Log.d(TAG, "findAll() completed!");
-								}
-							}
-					 )
-			         .setNegativeButton(
-			        		 "Cancel",
-			        		 new DialogInterface.OnClickListener() {
-			        			 public void onClick(DialogInterface dialog, int whichButton) {
-			        				 Log.d(TAG, "cancel selected... doing nothing!");
-			        				 // Do nothing.
-			        			 }
-			        		}
-			        )
-			    .show();
 				return true;
 			case R.id.menu_item_search:
 	        	Log.d(TAG, "menu_item_search selected");
 	        	Log.d(TAG, "launching search");
 	        	onSearchRequested();
 	            return true;
+			case R.id.menu_item_live:
+				Log.d(TAG, "menu_item_live selected");
+				Log.d(TAG, "launching browser intent");				
+				i = new Intent(Intent.ACTION_VIEW);
+				i.setData(Uri.parse(live_url));
+				startActivity(i);
+				return true;
 	        case R.id.menu_item_about:
 	        	Log.d(TAG, "menu_item_about_selected");
 	        	toastAbout();
@@ -136,20 +130,6 @@ public class DisplayPageActivity extends DefaultActivity {
 	        	Log.d(TAG, "default, calling fallback");
 	            return super.onOptionsItemSelected(item);
 	    }
-	}
-	
-    
-	// PRIVATE METHODS
-	private String getWikiPage(String wiki_filepath, String page_title) {
-		String results = null;
-		OfflineWikiReader owr = new OfflineWikiReader(wiki_filepath);
-		if(page_title.equals("index")) {
-			results = owr.getIndex();
-		} else {
-			results = owr.getPage(page_title);
-		}
-		Log.d(TAG, "results length: " + results.length());
-		return results;
 	}
 
 	// PRIVATE INNER CLASSES
@@ -169,11 +149,15 @@ public class DisplayPageActivity extends DefaultActivity {
 		}
 		
 	    @Override
-	    public void onPageFinished(WebView wv, String url) {
-	    	Log.d(TAG, "performing JavaScript operations...");
-			FormatMarkupTask task = new FormatMarkupTask();
-			task.execute(wv); // FIXME: This has to be bad coding (exiquio)	
-	        Log.d(TAG, "JavaScript operations performed!");
+	    public void onPageFinished(WebView webview, String url) {
+	    	if(!loaded) {
+	    		Log.d(TAG, "performing JavaScript operations...");
+	    		format_task.execute(webview);
+	    		Log.d(TAG, "JavaScript operations performed!");
+	    		loaded = true;
+	    	} else {
+	    		Log.d(TAG, "page already loaded.");
+	    	}
 	    }
 	}
 	
@@ -194,12 +178,21 @@ public class DisplayPageActivity extends DefaultActivity {
 			webview = webviews[0];
 			Log.d(TAG, "creating scripts...");
 	    	// FIXME: Perform the following operations in a more standard oriented way. (exiquio)
-	    	String script_1 = "document.getElementById('archnavbarmenu').innerHTML='<p>Visit <a href=\"http://wiki.archlinux.org/\">ArchWiki</a> on the Web</p>';";
-	    	String script_2 = "document.getElementById('jump-to-nav').innerHTML='';";
-	    	String script_3 = "document.getElementById('column-one').innerHTML='';";
-	    	String script_4 = "document.getElementById('footer').innerHTML='<p>Content is available under GNU Free Documentation License 1.2<p>'";     
+	    	String script_1 = "document.getElementById('archnavbarmenu').innerHTML = '<p>View article online at <a href=\"" + live_url + "\">ArchWiki</a>';";
+	    	String script_2 = 
+	    			"var elements = document.getElementById('bodyContent').getElementsByTagName('div');"  +
+	    			"elements[0].parentNode.removeChild(elements[0]);" +
+	    			"elements[0].parentNode.removeChild(elements[0]);" +
+	    			"elements[0].parentNode.removeChild(elements[0]);" +
+	    			"elements[0].removeChild(elements[0].getElementsByTagName('div')[0]);" +
+	    			"elements[1].parentNode.removeChild(elements[1]);" +
+	    			"elements[1].parentNode.removeChild(elements[1]);" +
+	    			"elements[1].parentNode.removeChild(elements[1]);" +
+	    			"var c1 = document.getElementById('column-one');" +
+	    			"c1.parentNode.removeChild(c1);";
+	    	String script_3 = "document.getElementById('footer').innerHTML='<p>Content is available under GNU Free Documentation License 1.2<p>'";    
 	        Log.d(TAG, "scripts created!");
-	    	return "javascript:" + script_1 + script_2 + script_3 + script_4;
+	    	return "javascript:" + script_1 + script_2 + script_3;
 		}
 		
 		@Override
@@ -235,16 +228,18 @@ public class DisplayPageActivity extends DefaultActivity {
 		    webview.setWebViewClient(new WikiWebViewClient()); //FIXME: This doesn't seem to intercept we need. (exiquio)
 		    webview.setBackgroundColor(Color.parseColor("#F6F9FC"));
 		    WebSettings webview_settings = webview.getSettings();
-		    //webview_settings.setAllowContentAccess(false); // FIXME: requires API 11 (exiquio)
-		    webview_settings.setAllowFileAccess(false); 
-		    //webview_settings.setDisplayZoomControls(false); FIXME: requires API 11 (exiquio)
-		    webview_settings.setJavaScriptEnabled(true); // TODO: Defer? (exiquio)
+		    webview_settings.setJavaScriptEnabled(true);
 		    webview_settings.setLoadWithOverviewMode(true);
 		    webview_settings.setUseWideViewPort(true);
 		    webview_settings.setBuiltInZoomControls(true);
-		    webview.loadData(URLEncoder.encode(html).replaceAll("\\+"," "), "text/html", "utf-8");
+		    try {
+				webview.loadData(URLEncoder.encode(html, "UTF-8").replaceAll("\\+"," "), "text/html", "utf-8");
+			} catch (UnsupportedEncodingException e) {
+				Log.e(TAG, "error stacktrace:\n" + e.toString());
+				toastError();
+				finish();
+			}
 		    Log.d(TAG, "webview loaded!");
-		    //dialog.dismiss(); Dismissed in FormatMarkupTask (exiquio)
 		}
 	}
 }

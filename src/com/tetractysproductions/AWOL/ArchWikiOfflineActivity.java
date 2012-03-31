@@ -45,15 +45,15 @@ import com.tetractysproductions.AWOL.DefaultActivity;
 public class ArchWikiOfflineActivity extends DefaultActivity {
 	private static String TAG = "AWOL - AWO_A";
 	private String topic;
+    private ConfigSetupTask config_setup_task = new ConfigSetupTask();
 	
-	// PUBLIC METHODS
+	// PROTECTED METHODS
 	@Override
-    public void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) {
     	super.onCreate(savedInstanceState);
     	setContentView(R.layout.main);    	
         Log.d(TAG, "ArchWikiOfflineActivity created...");
-        ConfigSetupTask task = new ConfigSetupTask();
-        task.execute();
+        config_setup_task.execute();
         Spinner topic_spinner = (Spinner) findViewById(R.id.topic_spinner);
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(
         		context,
@@ -65,6 +65,13 @@ public class ArchWikiOfflineActivity extends DefaultActivity {
         topic_spinner.setOnItemSelectedListener(new TopicSelectedListener());
     }
 	
+	@Override
+	protected void onDestroy() {
+		config_setup_task.cancel(true);
+		dialog.cancel();
+	}
+	
+	// PUBLIC METHODS
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		Log.d(TAG, "creating options menu...");
@@ -92,7 +99,7 @@ public class ArchWikiOfflineActivity extends DefaultActivity {
 	            return super.onOptionsItemSelected(item);
 	    }
 	}
-	
+    
 	public void searchWiki(View view) {
     	Log.d(TAG, "searchWiki called");
     	Log.d(TAG, "requesting search...");
@@ -103,7 +110,7 @@ public class ArchWikiOfflineActivity extends DefaultActivity {
 	public void displayPage(View view) {
     	Log.d(TAG, "displayPage called...");
     	Log.d(TAG, "wiki topic: " + topic);
-    	Intent intent = new Intent(context, DisplayPageActivity.class);
+    	Intent intent = new Intent("com.tetractysproductions.AWOL.DISPLAY_WIKI_PAGE");
     	Log.d(TAG, "loading extras...");
     	//intent.putExtra("wiki_filepath", wiki_filepath);
     	if(topic.equals("Index")) {
@@ -117,7 +124,7 @@ public class ArchWikiOfflineActivity extends DefaultActivity {
     	startActivity(intent);
     	Log.d(TAG, "displayPage done!");
     }
-    
+	
     // PRIVATE INNER CLASSES
     private class ConfigSetupTask extends AsyncTask<Void, Void, Void> {
 		@Override 

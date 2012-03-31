@@ -21,27 +21,27 @@ package com.tetractysproductions.AWOL;
 
 import java.io.File;
 
-import android.app.Activity;
+import android.app.ListActivity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.Toast;
 
-public abstract class DefaultActivity extends Activity {
+public class DefaultListActivity extends ListActivity {
 	protected ArchWikiOfflineApplication app;
-	private static String TAG = "AWOL - DEFAULT_A";
+	private static String TAG = "AWOL -  DEFAULT_LA";
 	protected String about_text;
 	protected String error_text;
 	protected Context context;
 	protected ProgressDialog dialog;
 	protected File config_dir;
 	protected String wiki_filepath;
-
-	// PROTECTED
+	
+	// PROTECTED METHODS
 	@Override
-    protected void onCreate(Bundle savedInstanceState) {
-    	super.onCreate(savedInstanceState);
+	protected void onCreate(Bundle savedInstanceState) {
+	    super.onCreate(savedInstanceState);
     	app = (ArchWikiOfflineApplication) getApplication();
     	context = this;
     	dialog = new ProgressDialog(context);
@@ -83,4 +83,5 @@ public abstract class DefaultActivity extends Activity {
         Log.d(TAG, "completed response to search request!");
         return true;
     }
+
 }

@@ -1,5 +1,5 @@
 AWOL: ArchWiki Offline
-Version: 0.1.4 (Alpha)
+Version: 0.2.0 (Alpha II)
 License: GPLv3
 Copyright: (C) 2012  Tetractys Productions LLC.
 Author: Exiquio Cooper-Anderson (exiquio [at] gmail [dot] com)
@@ -12,22 +12,23 @@ feedback is appreciated and can be expressed either via "Issues" on the Project 
 Features:
 -Offline access to the popular GNU/Linux resource, ArchWiki (http://wiki.archlinux.org)
 -Quickly load the most useful topics
--Quick search ArchWiki topics
--Search in page (partially implemented)
+-Quickly search ArchWiki topics
+-Load online ArchWiki article from offline page via top of page link or menu butto
+
+Limitations:
+-English Only
 
 Permissions Required:
 -WRITE_EXTERNAL_STORAGE: This app needs to be able to write to an SD card if possible.
 
-Beta Roadmap:
--Search Suggestions
--Action Bar (API 14+)
--Removable Visual Zoom Controls (API 11+)
--Bookmarks
--Google Analytics Opt-In
--Reimplementation of ZIMFile related operations
--New Zimfile
--Handle incorrect URL loading
--Add Random button to "home page"
+Beta Roadmap (TODO List):
+-Favorites
+-Reimplement Find in page find in page (http://devemat-androidprogramming.blogspot.com/2012/03/search-text-within-webview.html)
+-Filter out non-English results
+-Correct or disable URL loading problems
+-ArchWiki index based search suggestions
+-ArchWiki index based random topic feature
+-Reimplementation of ZIMFile related operations including checksum
 -Final Artwork by Vivo aka ArtVictim
 
 Project Page:
@@ -55,6 +56,16 @@ References:
 	http://www.amazon.com/gp/product/B007D472LG
 
 Changelog:
+0.2.0 Alpha II
+-Features: 
+	Load online ArchWiki article from offline page via top of page link or menu button, improved page formating, removed find-in-page feature
+-Performance: 
+	layouts now use dp, removed background color main layout
+-Stability: 
+	uses-sdk merged, debuggable option remove, DefaulActivity now abstract class, AsynTasks cancel on destroy, new check for loaded pages before formatting
+-Refactors: 
+	new intent .DISPLAY_WIKI_PAGE, new application ArchWikiOfflineApplication, new activity DefaultListActivity modified about text,
+	created error message and toast, created arrarys.xml
 
 0.1.4
 -API minimum level lowered to 7 (Android 2.1)
@@ -65,21 +76,16 @@ Changelog:
 -New placeholder artwork
 -Menu: Implemented Home, Find in Page. Search and About menu items
 -Add explicit support for large screens for Kindle Fire (and others)
+...
 
-0.1.2 
--Tweaked for compatibility with Amazon AppStore
 
-0.1.1
--Disabled Beginners' Guide topic due to instability
+Thanks:
 
-0.1.0
--Alpha I
-
-*****Awwhhh
 Thanks Judd Vinet, Aaron Griffon, the Arch Linux developers, package maintainers, forum moderators and wiki administrators as well
 as the general Arch Linux Community of which Tetractys Productions is proud to be a member of. 
-*****hhhwwA
 
-*The ArchWiki name, Arch Linux name and the Arch Linux Logo are recognized trademarks of Judd Vinet and Aaron Griffin. 
 
-The AWOL Logo, Tetractys Productions and Tetractys Productions Logo are recognized trademarks of Tetractys Production* LLC.
+Legal:
+
+The ArchWiki name, Arch Linux name and the Arch Linux Logo are recognized trademarks of Judd Vinet and Aaron Griffin. 
+The AWOL Logo, Tetractys Productions and Tetractys Productions Logo are recognized trademarks of Tetractys Productions LLC.

@@ -1,28 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">ArchWiki - Offline</string>
-    <string name="app_version">0.1.4</string>
+    <string name="about">AWOL: ArchWiki Offline (0.2.0) - &#169; 2012 Tetractys Productions.</string>
     <string name="app_logo_description">ArchWiki Offline</string>
     <string name="company_logo_description">Tetractys Productions LLC</string>
-    
-    <string-array name="topics">
-        <item>Arch Linux</item>
-        <item>The Arch Way</item>
-        <item>Arch Compared to Other Distributions</item>
-        <item>Official Installation Guide</item>
-        <!-- <item>Beginners\' Guide</item> -->
-        <item>General Recommendations</item>
-        <item>FAQ</item>
-        <item>Getting Involved</item>
-        <!-- <item>Index</item> -->
-    </string-array>
     
     <string name="load_button">Load Topic</string>
     <string name="search_hint">Search ArchWiki Offline</string>
     <string name="search_button">Search Wiki</string>
     
     <string name="menu_item_home">Home</string>
-    <string name="menu_item_find_in_page">Find In Page</string>
     <string name="menu_item_search">Search</string>
+    <string name="menu_item_live">Live Article</string>
     <string name="menu_item_about">About</string>
+    
+    <string name="error">An error has occured and requiring this application to halt. Goodbye.</string>
 </resources>

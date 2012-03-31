@@ -3,12 +3,12 @@
     
     <item android:id="@+id/menu_item_home"
     	  android:title="@string/menu_item_home" />
-   
-   	<item android:id="@+id/menu_item_find_in_page"
-   		  android:title="@string/menu_item_find_in_page" />
     	  
     <item android:id="@+id/menu_item_search"
           android:title="@string/menu_item_search" />
+    
+    <item android:id="@+id/menu_item_live"
+          android:title="@string/menu_item_live" />
           
     <item android:id="@+id/menu_item_about"
           android:title="@string/menu_item_about" />
