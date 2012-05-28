@@ -1,4 +1,4 @@
-/** 
+/**
  * Copyright (C) 2012 Tetractys Productions LLC
  *
  * This program is free software: you can redistribute it and/or modify
@@ -14,9 +14,10 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
- * @author Exiquio Cooper-Anderson (exiquio [at] gmail [dot] com) 
- * 
+ * @author Exiquio Cooper-Anderson (exiquio [at] gmail [dot] com)
+ *
  */
+
 package com.tetractysproductions.AWOL;
 
 import android.app.Application;
@@ -25,7 +26,7 @@ import android.util.Log;
 public class ArchWikiOfflineApplication extends Application {
 	private static String TAG = "ArchWikiOfflineApplication";
 	protected String DONT_DISPLAY_ME = " - ArchWiki.html";
-	
+
 	@Override
 	public void onCreate(){
 		super.onCreate();

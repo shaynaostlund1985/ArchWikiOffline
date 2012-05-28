@@ -1,18 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <resources>
-    <string name="app_name">ArchWiki - Offline</string>
-    <string name="about">AWOL: ArchWiki Offline (0.2.0) - &#169; 2012 Tetractys Productions.</string>
-    <string name="app_logo_description">ArchWiki Offline</string>
-    <string name="company_logo_description">Tetractys Productions LLC</string>
-    
-    <string name="load_button">Load Topic</string>
-    <string name="search_hint">Search ArchWiki Offline</string>
-    <string name="search_button">Search Wiki</string>
-    
-    <string name="menu_item_home">Home</string>
-    <string name="menu_item_search">Search</string>
-    <string name="menu_item_live">Live Article</string>
-    <string name="menu_item_about">About</string>
-    
-    <string name="error">An error has occured and requiring this application to halt. Goodbye.</string>
+
+	<string name="app_name">ArchWiki - Offline</string>
+  <string name="about">
+		AWOL: ArchWiki Offline (0.3.0) - &#169; 2012 Tetractys Productions LLC.
+		Written by Exiquio Cooper-Anderson (@exiquio1983). Graphics by Vivo
+		(vivoisalive.com). Released as Free Software: GPLv3.
+	</string>
+  <string name="app_logo_description">ArchWiki Offline</string>
+  <string name="company_logo_description">Tetractys Productions LLC</string>
+  <string name="voa_logo_description">http://www,VivoIsAlive.com</string>
+  <string name="search_hint">Search ArchWiki Offline</string>
+  <string name="menu_item_home">Home</string>
+  <string name="menu_item_search">Search</string>
+  <string name="menu_item_live">Live Article</string>
+  <string name="menu_item_about">About</string>
+  <string name="error">
+		An error has occured and requiring this application to halt. Sorry ;)
+	</string>
+
 </resources>

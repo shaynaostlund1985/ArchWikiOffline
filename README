@@ -1,5 +1,5 @@
 AWOL: ArchWiki Offline
-Version: 0.2.0 (Alpha II)
+Version: 0.3.0 (Alpha III)
 License: GPLv3
 Copyright: (C) 2012  Tetractys Productions LLC.
 Author: Exiquio Cooper-Anderson (exiquio [at] gmail [dot] com)
@@ -7,19 +7,19 @@ Author: Exiquio Cooper-Anderson (exiquio [at] gmail [dot] com)
 Description:
 ArchWki Offline provides users an offline version of the popular Linux resource, ArchWiki. It is based on OpenZIM, zimreader-java in particular.
 This software is alpha software and meant for testing purposes as development pushes forward towards a "feature complete" beta. Comments and other
-feedback is appreciated and can be expressed either via "Issues" on the Project Page or by posting on the Project Thread.  
+feedback is appreciated and can be expressed either via "Issues" on the Project Page or by posting on the Project Thread.
 
 Features:
 -Offline access to the popular GNU/Linux resource, ArchWiki (http://wiki.archlinux.org)
 -Quickly load the most useful topics
 -Quickly search ArchWiki topics
--Load online ArchWiki article from offline page via top of page link or menu butto
+-Load online ArchWiki article from offline page via top of page link or menu button
 
 Limitations:
 -English Only
 
 Permissions Required:
--WRITE_EXTERNAL_STORAGE: This app needs to be able to write to an SD card if possible.
+-WRITE_EXTERNAL_STORAGE: This app needs to be able to write to storage.
 
 Beta Roadmap (TODO List):
 -Favorites
@@ -29,7 +29,7 @@ Beta Roadmap (TODO List):
 -ArchWiki index based search suggestions
 -ArchWiki index based random topic feature
 -Reimplementation of ZIMFile related operations including checksum
--Final Artwork by Vivo aka ArtVictim
+-Update ZIMFile
 
 Project Page:
 -https://github.com/tetractysproductions/ArchWikiOffline
@@ -40,52 +40,40 @@ Project Thread:
 
 References:
 
--ArchWiki: 
+-ArchWiki:
 	http://wiki.archlinux.org
--arch-wiki-docs: 
+-arch-wiki-docs:
 	http://www.archlinux.org/packages/community/any/arch-wiki-docs/
--OpenZim Project: 
+-OpenZim Project:
 	http://www.openzim.org
 -zimreader-java:
 	http://svn.openzim.org/viewvc.cgi/trunk/zimreader-java/
 -Alpha?:
 	http://en.wikipedia.org/wiki/Software_release_life_cycle#Alpha
--AWOL on Play Store: 
+-AWOL on Play Store:
 	http://goo.gl/ZHXwV
--AWOL on Amazon AppStore: 
+-AWOL on Amazon AppStore:
 	http://www.amazon.com/gp/product/B007D472LG
 
 Changelog:
-0.2.0 Alpha II
--Features: 
-	Load online ArchWiki article from offline page via top of page link or menu button, improved page formating, removed find-in-page feature
--Performance: 
-	layouts now use dp, removed background color main layout
--Stability: 
-	uses-sdk merged, debuggable option remove, DefaulActivity now abstract class, AsynTasks cancel on destroy, new check for loaded pages before formatting
--Refactors: 
-	new intent .DISPLAY_WIKI_PAGE, new application ArchWikiOfflineApplication, new activity DefaultListActivity modified about text,
-	created error message and toast, created arrarys.xml
-
-0.1.4
--API minimum level lowered to 7 (Android 2.1)
--Improved Stability;)
--Removed "index" from topics list
-
-0.1.3
--New placeholder artwork
--Menu: Implemented Home, Find in Page. Search and About menu items
--Add explicit support for large screens for Kindle Fire (and others)
-...
-
+0.3.0 Alpha III
+-Features:
+	new art by Vivo (vivoisalive.com)
+-Stability:
+	corrected issue that would cause crashes when pushing the back button in certain circumstances
+-Refactors:
+	code readability/mantainability improved.
+-Misc:
+	removed non-english search results
 
 Thanks:
 
 Thanks Judd Vinet, Aaron Griffon, the Arch Linux developers, package maintainers, forum moderators and wiki administrators as well
-as the general Arch Linux Community of which Tetractys Productions is proud to be a member of. 
+as the general Arch Linux Community of which Tetractys Productions is proud to be a member of.
 
+A mean shotout to Stephen Meyers for aiding the project.
 
 Legal:
 
-The ArchWiki name, Arch Linux name and the Arch Linux Logo are recognized trademarks of Judd Vinet and Aaron Griffin. 
-The AWOL Logo, Tetractys Productions and Tetractys Productions Logo are recognized trademarks of Tetractys Productions LLC.
+The ArchWiki name, Arch Linux name and the Arch Linux Logo are recognized trademarks of Judd Vinet and Aaron Griffin.
+The AWOL Logo, Tetractys Productions and Tetractys Productions Logo are trademarks of Tetractys Productions LLC.

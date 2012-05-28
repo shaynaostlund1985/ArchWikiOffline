@@ -1,72 +1,90 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.tetractysproductions.AWOL"
-    android:versionCode="6"
-    android:versionName="0.2.0" 
-    android:installLocation="preferExternal"> 
 
-    <uses-sdk
-        android:targetSdkVersion="15"
-        android:minSdkVersion="7" />
-    
-   	<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    		
-   	<uses-feature android:name="com.google.android.tv" android:required="false"/>
-   	<uses-feature android:name="android.hardware.screen.landscape" android:required="false"/>
-   	<uses-feature android:name="android.hardware.screen.portrait" android:required="false"/>
-   	<uses-feature android:name="android.hardware.touchscreen" android:required="false"/>
-   	<uses-feature android:name="android.hardware.touchscreen.multitouch" android:required="false"/>
-   	<uses-feature android:name="android.hardware.touchscreen" android:required="false"/>
-   	<uses-feature android:name="android.hardware.touchscreen" android:required="false"/>
-   	<uses-feature android:name="android.hardware.touchscreen" android:required="false"/>
-   	
-   	<supports-screens android:smallScreens="true" />
-   	<supports-screens android:normalScreens="true" />
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+	package="com.tetractysproductions.AWOL"
+	android:versionCode="7"
+  android:versionName="0.3.0"
+  android:installLocation="preferExternal">
+
+  <uses-sdk
+		android:targetSdkVersion="15"
+    android:minSdkVersion="7"/>
+
+  <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+
+  <uses-feature
+		android:name="com.google.android.tv"
+		android:required="false"/>
+  <uses-feature
+		android:name="android.hardware.screen.landscape"
+		android:required="false"/>
+   	<uses-feature
+		android:name="android.hardware.screen.portrait"
+		android:required="false"/>
+   	<uses-feature
+			android:name="android.hardware.touchscreen"
+			android:required="false"/>
+   	<uses-feature
+			android:name="android.hardware.touchscreen.multitouch"
+			android:required="false"/>
+   	<uses-feature
+			android:name="android.hardware.touchscreen"
+			android:required="false"/>
+   	<uses-feature
+			android:name="android.hardware.touchscreen"
+			android:required="false"/>
+   	<uses-feature
+			android:name="android.hardware.touchscreen"
+			android:required="false"/>
+
+   	<supports-screens android:smallScreens="true"/>
+   	<supports-screens android:normalScreens="true"/>
    	<supports-screen android:largeScreens="true"/>
    	<supports-screen android:xlargeScreens="true"/>
    	<supports-screen android:anyDensity="true"/>
-   	
-   	
+
+
     <application
-        android:name=".ArchWikiOfflineApplication"
-        android:icon="@drawable/ic_launcher"
-        android:label="@string/app_name">
-        <meta-data 
-        	android:name="android.app.default_searchable"
-            android:value=".SearchWikiActivity" />
-        
-        <activity
-            android:name=".ArchWikiOfflineActivity"
-            android:label="@string/app_name"
-            android:configChanges="orientation|keyboardHidden">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
-        
-       	<activity
-            android:name=".DisplayPageActivity"
-            android:label="@string/app_name"
-            android:configChanges="orientation|keyboardHidden">
-        	<intent-filter>
-                <action android:name="com.tetractysproductions.AWOL.DISPLAY_WIKI_PAGE" />
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-        </activity>
-        
-        <activity 
-            android:name= ".SearchWikiActivity"
-            android:label="@string/app_name"
-            android:configChanges="orientation|keyboardHidden">
-        	<intent-filter>
-            	<action android:name="android.intent.action.SEARCH" />
-        	</intent-filter>
-        	<meta-data
-        	    android:name="android.app.searchable"
-        	    android:resource="@xml/searchable"/>
+      android:name=".ArchWikiOfflineApplication"
+      android:icon="@drawable/ic_launcher"
+      android:label="@string/app_name">
+
+			<meta-data
+      	android:name="android.app.default_searchable"
+        android:value=".SearchWikiActivity"/>
+
+      <activity
+        android:name=".ArchWikiOfflineActivity"
+        android:label="@string/app_name"
+        android:configChanges="orientation|keyboardHidden">
+				<intent-filter>
+          <action android:name="android.intent.action.MAIN"/>
+          <category android:name="android.intent.category.LAUNCHER"/>
+        </intent-filter>
+      </activity>
+
+      <activity
+        android:name=".DisplayPageActivity"
+        android:label="@string/app_name"
+        android:configChanges="orientation|keyboardHidden">
+      	<intent-filter>
+          <action android:name="com.tetractysproductions.AWOL.DISPLAY_WIKI_PAGE"/>
+          <category android:name="android.intent.category.DEFAULT"/>
+        </intent-filter>
+      </activity>
+
+      <activity
+        android:name= ".SearchWikiActivity"
+        android:label="@string/app_name"
+        android:configChanges="orientation|keyboardHidden">
+				<intent-filter>
+         	<action android:name="android.intent.action.SEARCH"/>
+      	</intent-filter>
+      	<meta-data
+        	android:name="android.app.searchable"
+        	android:resource="@xml/searchable"/>
     	</activity>
-        
+
     </application>
 
 </manifest>

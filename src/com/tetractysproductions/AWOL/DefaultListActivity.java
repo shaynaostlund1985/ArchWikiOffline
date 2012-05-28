@@ -1,4 +1,4 @@
-/** 
+/**
  * Copyright (C) 2012 Tetractys Productions LLC
  *
  * This program is free software: you can redistribute it and/or modify
@@ -14,8 +14,8 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
- * @author Exiquio Cooper-Anderson (exiquio [at] gmail [dot] com) 
- * 
+ * @author Exiquio Cooper-Anderson (exiquio [at] gmail [dot] com)
+ *
  */
 package com.tetractysproductions.AWOL;
 
@@ -29,59 +29,54 @@ import android.util.Log;
 import android.widget.Toast;
 
 public class DefaultListActivity extends ListActivity {
-	protected ArchWikiOfflineApplication app;
 	private static String TAG = "AWOL -  DEFAULT_LA";
+
+	protected ArchWikiOfflineApplication app;
 	protected String about_text;
 	protected String error_text;
 	protected Context context;
 	protected ProgressDialog dialog;
 	protected File config_dir;
 	protected String wiki_filepath;
-	
+
 	// PROTECTED METHODS
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-	    super.onCreate(savedInstanceState);
-    	app = (ArchWikiOfflineApplication) getApplication();
-    	context = this;
-    	dialog = new ProgressDialog(context);
-    	config_dir = new File(context.getFilesDir().getAbsoluteFile() + "/awol");
-        Log.d(TAG, "config_dir: " + config_dir.getAbsolutePath());
-        wiki_filepath = config_dir.getAbsolutePath() + "/archwiki.zim";
+    super.onCreate(savedInstanceState);
+   	app = (ArchWikiOfflineApplication) getApplication();
+   	context = this;
+   	dialog = new ProgressDialog(context);
+   	config_dir = new File(context.getFilesDir().getAbsoluteFile() + "/awol");
+    Log.d(TAG, "config_dir: " + config_dir.getAbsolutePath());
+    wiki_filepath = config_dir.getAbsolutePath() + "/archwiki.zim";
 		about_text = getString(R.string.about);
 		Log.d(TAG, "about_text: " + about_text);
 		error_text = getString (R.string.error);
 		Log.d(TAG, "error_text: " + error_text);
 	}
-	
-	@Override
-	protected void onDestroy() {
-		super.onDestroy();
-	}
-	
+
 	protected void toastAbout() {
 		Log.d(TAG, "toastAbout called, making toast...");
 		Toast toast = Toast.makeText(context, about_text, Toast.LENGTH_LONG);
-		toast.show();	
+		toast.show();
 		Log.d(TAG, "done toasting!");
 	}
-	
+
 	protected void toastError() {
 		Log.d(TAG, "toastError called, making toast...");
 		Toast toast = Toast.makeText(context, error_text, Toast.LENGTH_LONG);
-		toast.show();	
+		toast.show();
 		Log.d(TAG, "done toasting!");
 	}
-	
+
 	// PUBLIC METHODS
 	@Override
-    public boolean onSearchRequested() {
+  public boolean onSearchRequested() {
 		Log.d(TAG, "onSearchRequested called...");
-    	Log.d(TAG, "calling startSearch...");
-        startSearch(null, false, null, false);
-        Log.d(TAG, "startSearch called!");
-        Log.d(TAG, "completed response to search request!");
-        return true;
-    }
-
+   	Log.d(TAG, "calling startSearch...");
+    startSearch(null, false, null, false);
+    Log.d(TAG, "startSearch called!");
+    Log.d(TAG, "completed response to search request!");
+    return true;
+  }
 }

@@ -1,0 +1,8 @@
+*.zim
+*.apk
+*.dex
+*.class
+bin/
+gen/
+
+
